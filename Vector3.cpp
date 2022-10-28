@@ -86,6 +86,24 @@ namespace mvl {
 	}
 
 	template<typename T>
+	T& Vector3<T>::operator[](char id) const
+	{
+		switch (id) {
+		case 'x':
+		case 'X':
+			return this->x;
+		case 'y':
+		case 'Y':
+			return this->y;
+		case 'z':
+		case 'Z':
+			return this->z;
+		default:
+			throw std::out_of_range;
+		}
+	}
+
+	template<typename T>
 	constexpr Vector3<T> Vector3<T>::Abs() const
 	{
 		Vector3<T> ret{ this };

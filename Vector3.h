@@ -7,11 +7,11 @@
 namespace mvl {
 	template <typename T>
 	class Vector3 {
-	public:
+	private:
 		T x;
 		T y;
 		T z;
-
+	public:		
 		Vector3<T>();
 
 		Vector3<T>(T x, T y, T z = 0);
@@ -48,6 +48,7 @@ namespace mvl {
 		//Array like getter,
 		//throws out of range exception for numbers bigger than 2
 		T& operator[](size_t id) const;
+		T& operator[](char id) const;
 
 		//Returns new vector with all components in absolute values. Doesnt change components
 		constexpr Vector3<T> Abs() const;
@@ -58,6 +59,9 @@ namespace mvl {
 		//Returns length of an vector.
 		//Use length squared for faster computing
 		constexpr T Length() const;
+		
+		//Returns vector normal
+		constexpr Vector3<T> Normal() const;
 
 		//Returns and sets vectors length to 1
 		constexpr Vector3<T> Normalize();
@@ -82,6 +86,13 @@ namespace mvl {
 	};
 	typedef Vector3<int> Vector3i;
 	typedef Vector3<float> Vector3f;
+
+	template<typename T>
+	class Vector2 : Vector3 {
+
+	};
+	typedef Vector2<int> Vector2i;
+	typedef Vector2<float> Vector2f;
 }
 
 #endif // !Vector2
