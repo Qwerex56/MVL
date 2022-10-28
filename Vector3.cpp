@@ -2,7 +2,7 @@
 
 namespace mvl {
 	template<class T>
-	Vector3<T>::Vector3<T>()
+	mvl::Vector3<T>::Vector3<T>()
 	{
 		this->x = 0;
 		this->y = 0;
@@ -66,27 +66,27 @@ namespace mvl {
 	template<typename T>
 	Vector3<T> Vector3<T>::operator/(const T scalar)
 	{
-		return this * (1 / scalar);
+		return *this * (1 / scalar);
 	}
 
-	template<typename T>
-	T& Vector3<T>::operator[](size_t id) const
-	{
-		switch (id)
-		{
-		case 0:
-			return x;
-		case 1:
-			return y;
-		case 2:
-			return z;
-		default:
-			throw std::out_of_range;
-		}
-	}
+	//template<typename T>
+	//T Vector3<T>::operator[](size_t id) const
+	//{
+	//	switch (id)
+	//	{
+	//	case 0:
+	//		return x;
+	//	case 1:
+	//		return y;
+	//	case 2:
+	//		return z;
+	//	default:
+	//		throw std::out_of_range{ "out of range" };
+	//	}
+	//}
 
 	template<typename T>
-	T& Vector3<T>::operator[](char id) const
+	T Vector3<T>::operator[](char id) const
 	{
 		switch (id) {
 		case 'x':
@@ -99,7 +99,7 @@ namespace mvl {
 		case 'Z':
 			return this->z;
 		default:
-			throw std::out_of_range;
+			throw std::out_of_range{ "out of range" };
 		}
 	}
 
@@ -136,47 +136,27 @@ namespace mvl {
 	}
 
 	template<typename T>
+	constexpr Vector3<T> Vector3<T>::Normal() const
+	{
+		return Vector3<T>();//*this / this->Length();
+	}
+
+	template<typename T>
 	constexpr Vector3<T> Vector3<T>::Normalize()
 	{
-		this /= Length();
-		return this;
+		*this /= Length();
+		return *this;
 	}
 
 	template<typename T>
-	Vector3<T> operator+=(const Vector3<T>& lhs, const Vector3<T>& rhs)
+	constexpr T Vector3<T>::Dot(const Vector3<T>& vec) const
 	{
-		return Vector3<T>(lhs.x + rhs.x, lhs.y + rhs.y, lhs.z + rhs.z);
+		return this.x * vec.x + this.y * vec.y + this.z * vec.z;
 	}
 
 	template<typename T>
-	Vector3<T> operator-=(const Vector3<T>& lhs, const Vector3<T>& rhs)
+	constexpr T Vector3<T>::DotProduct(const Vector3<T>& vec) const
 	{
-		return Vector3<T>(lhs.x - rhs.x, lhs.y - rhs.y, lhs.z - rhs.z);
+		return acos(Dot(vec) / (this->Length() * vec.Length()));
 	}
-
-	template<typename T>
-	Vector3<T> operator*=(const Vector3<T>& lhs, const Vector3<T>& rhs)
-	{
-		return Vector3<T>(/*kto wie*/);
-	}
-
-	template<typename T>
-	Vector3<T> operator*=(const Vector3<T>& lhs, const T scalar)
-	{
-		return Vector3<T>(lhs.x * scalar, lhs.y * scalar, lhs.z * scalar);
-	}
-
-	template<typename T>
-	Vector3<T> operator/=(const Vector3<T>& lhs, const Vector3<T>& rhs)
-	{
-		return Vector3<T>(/*kto wie*/);
-	}
-
-	template<typename T>
-	Vector3<T> operator/=(const Vector3<T>& lhs, const T scalar)
-	{
-		return Vector3<T>(lhs * (1 / scalar));
-	}
-
-
 }

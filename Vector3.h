@@ -3,6 +3,7 @@
 #define _Vector2_
 
 #include <stdexcept>
+#include <iostream>
 
 namespace mvl {
 	template <typename T>
@@ -26,29 +27,54 @@ namespace mvl {
 
 		Vector3<T> operator*(const Vector3<T>& rhs);
 
-		Vector3<T> operator*(const T scalar);
+		Vector3<T> operator*(const T);
 
-		Vector3<T> operator/(const Vector3<T>& rhs);
+		Vector3<T> operator/(const Vector3<T>&);
 
-		Vector3<T> operator/(const T scalar);
+		Vector3<T> operator/(const T);
 
-		friend Vector3<T> operator+=(const Vector3<T>& lhs, const Vector3<T>& rhs);
+		friend Vector3<T> operator+=(Vector3<T>& lhs, const Vector3<T>& rhs)
+		{
+			return lhs + rhs;
+		}
 
-		friend Vector3<T> operator-=(const Vector3<T>& lhs, const Vector3<T>& rhs);
+		friend Vector3<T> operator-=(Vector3<T>& lhs, const Vector3<T>& rhs)
+		{
+			return lhs - rhs;
+		}
 
-		friend Vector3<T> operator*=(const Vector3<T>& lhs, const Vector3<T>& rhs);
+		friend Vector3<T> operator*=(Vector3<T>& lhs, const Vector3<T>& rhs)
+		{
+			return Vector3<T>(/*kto wie*/);
+		}
 
-		friend Vector3<T> operator*=(const Vector3<T>& lhs, const T scalar);
+		friend Vector3<T> operator*=(Vector3<T>& lhs, const T scalar)
+		{
+			return lhs * scalar;
+		}
 
-		friend Vector3<T> operator/=(const Vector3<T>& lhs, const Vector3<T>& rhs);
+		friend Vector3<T> operator/=(Vector3<T>& lhs, const Vector3<T>& rhs)
+		{
+			return Vector3<T>(/*kto wie*/);
+		}
+
+		friend Vector3<T> operator/=(Vector3<T>& lhs, const T scalar)
+		{
+			//lhs = lhs * (1 / scalar);
+			return lhs * (1 / scalar);
+		}
+
+		inline static void Print(const Vector3<T>& vec) {
+			std::cout << "x: " << vec.x << " y: " << vec.y << " z: " << vec.z << std::endl;
+		}
 
 		//TODO:
 		// Logic operators
 
 		//Array like getter,
 		//throws out of range exception for numbers bigger than 2
-		T& operator[](size_t id) const;
-		T& operator[](char id) const;
+		//T operator[](size_t id) const;
+		T operator[](char id) const;
 
 		//Returns new vector with all components in absolute values. Doesnt change components
 		constexpr Vector3<T> Abs() const;
@@ -88,7 +114,7 @@ namespace mvl {
 	typedef Vector3<float> Vector3f;
 
 	template<typename T>
-	class Vector2 : Vector3 {
+	class Vector2 : Vector3<T> {
 
 	};
 	typedef Vector2<int> Vector2i;
