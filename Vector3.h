@@ -33,35 +33,39 @@ namespace mvl {
 
 		Vector3<T> operator/(const T);
 
-		friend Vector3<T> operator+=(Vector3<T>& lhs, const Vector3<T>& rhs)
-		{
-			return lhs + rhs;
+		Vector3<T> operator=(const Vector3<T>& rhs) {
+			this->x = rhs.x;
+			this->y = rhs.y;
+			this->z = rhs.z;
+			return *this;
 		}
 
-		friend Vector3<T> operator-=(Vector3<T>& lhs, const Vector3<T>& rhs)
-		{
-			return lhs - rhs;
+		friend Vector3<T> operator+=(Vector3<T>& lhs, const Vector3<T>& rhs) {
+			return lhs = lhs + rhs;
 		}
 
-		friend Vector3<T> operator*=(Vector3<T>& lhs, const Vector3<T>& rhs)
-		{
+		friend Vector3<T> operator-=(Vector3<T>& lhs, const Vector3<T>& rhs) {
+			return lhs = lhs - rhs;
+		}
+
+		friend Vector3<T> operator*=(Vector3<T>& lhs, const Vector3<T>& rhs) {
 			return Vector3<T>(/*kto wie*/);
 		}
 
-		friend Vector3<T> operator*=(Vector3<T>& lhs, const T scalar)
-		{
-			return lhs * scalar;
+		friend Vector3<T> operator*=(Vector3<T>& lhs, const T scalar) {
+			return lhs = lhs * scalar;
 		}
 
-		friend Vector3<T> operator/=(Vector3<T>& lhs, const Vector3<T>& rhs)
-		{
+		friend Vector3<T> operator/=(Vector3<T>& lhs, const Vector3<T>& rhs) {
 			return Vector3<T>(/*kto wie*/);
 		}
 
-		friend Vector3<T> operator/=(Vector3<T>& lhs, const T scalar)
-		{
-			//lhs = lhs * (1 / scalar);
-			return lhs * (1 / scalar);
+		friend Vector3<T> operator/=(Vector3<T>& lhs, const T scalar) {
+			return lhs = lhs * (1 / scalar);
+		}
+		
+		friend Vector3<T> operator/=(const T scalar, Vector3<T>& lhs) {
+			return lhs = lhs * (1 / scalar);
 		}
 
 		inline static void Print(const Vector3<T>& vec) {
@@ -71,10 +75,14 @@ namespace mvl {
 		//TODO:
 		// Logic operators
 
+		friend auto operator<=>(const Vector3<T>& lhs, const Vector3<T>& rhs) {
+
+		}
+
 		//Array like getter,
 		//throws out of range exception for numbers bigger than 2
-		//T operator[](size_t id) const;
-		T operator[](char id) const;
+		T operator[](size_t id) const;
+		// T operator[](char id) const;
 
 		//Returns new vector with all components in absolute values. Doesnt change components
 		constexpr Vector3<T> Abs() const;
@@ -98,6 +106,9 @@ namespace mvl {
 		//Rotates a vector counter clockwise by given radian
 		constexpr Vector3<T> RotateC(float angle);
 
+
+
+
 		//Returns dot of an two vectors
 		constexpr T Dot(const Vector3<T>&) const;
 
@@ -113,6 +124,7 @@ namespace mvl {
 	typedef Vector3<int> Vector3i;
 	typedef Vector3<float> Vector3f;
 
+	//2D representatiion of Vector3D
 	template<typename T>
 	class Vector2 : Vector3<T> {
 
