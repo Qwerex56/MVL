@@ -21,6 +21,10 @@ namespace mvl {
 
 		Vector3<T>(const Vector3&&);
 
+		inline T X() { return this->x; }
+		inline T Y() { return this->y; }
+		inline T Z() { return this->z; }
+
 		Vector3<T> operator+(const Vector3<T>& rhs);
 
 		Vector3<T> operator-(const Vector3<T>& rhs);
@@ -74,15 +78,46 @@ namespace mvl {
 
 		//TODO:
 		// Logic operators
-
-		friend auto operator<=>(const Vector3<T>& lhs, const Vector3<T>& rhs) {
-
+		constexpr friend bool operator <=(Vector3<T>& lhs, const Vector3<T>& rhs) {
+			if (lhs.X() <= rhs.X() && lhs.Y() <= rhs.Y() && lhs.Z() <= rhs.Z()) {
+				return true;
+			}
+			else return false;
+		}
+		constexpr friend bool operator >=(Vector3<T>&, const Vector3<T>&) {
+			if (lhs.X() >= rhs.X() && lhs.Y() >= rhs.Y() && lhs.Z() >= rhs.Z()) {
+				return true;
+			}
+			else return false;
+		}
+		constexpr friend bool operator < (Vector3<T>&, const Vector3<T>&) {
+			if (lhs.X() < rhs.X() && lhs.Y() < rhs.Y() && lhs.Z() < rhs.Z()) {
+				return true;
+			}
+			else return false;
+		}
+		constexpr friend bool operator > (Vector3<T>&, const Vector3<T>&) {
+			if (lhs.X() > rhs.X() && lhs.Y() > rhs.Y() && lhs.Z() > rhs.Z()) {
+				return true;
+			}
+			else return false;
+		}
+		constexpr friend bool operator ==(Vector3<T>&, const Vector3<T>&) {
+			if (lhs.X() == rhs.X() && lhs.Y() == rhs.Y() && lhs.Z() == rhs.Z()) {
+				return true;
+			}
+			else return false;
+		}
+		constexpr friend bool operator !=(Vector3<T>&, const Vector3<T>&) {
+			if (lhs.X() != rhs.X() && lhs.Y() != rhs.Y() && lhs.Z() != rhs.Z()) {
+				return true;
+			}
+			else return false;
 		}
 
 		//Array like getter,
 		//throws out of range exception for numbers bigger than 2
 		T operator[](size_t id) const;
-		// T operator[](char id) const;
 
 		//Returns new vector with all components in absolute values. Doesnt change components
 		constexpr Vector3<T> Abs() const;
@@ -105,9 +140,6 @@ namespace mvl {
 
 		//Rotates a vector counter clockwise by given radian
 		constexpr Vector3<T> RotateC(float angle);
-
-
-
 
 		//Returns dot of an two vectors
 		constexpr T Dot(const Vector3<T>&) const;
